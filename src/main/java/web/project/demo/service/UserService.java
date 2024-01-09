@@ -63,4 +63,15 @@ public class UserService {
         user.setUpdatedAt(LocalDateTime.now());
         return new UserResponse(userRepository.save(user).getId());
     }
+
+    public GetUserResponse findUserByUsername(String username) throws UserNotFoundException{
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with " + username + " not found"));
+        return new GetUserResponse(
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getCreatedAt(),
+                new DepartmentResponse(user.getDepartment().getId())
+        );
+    }
 }
