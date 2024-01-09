@@ -53,4 +53,13 @@ public class UserServiceTest {
         Assertions.assertEquals(foundUser.getLastName(), user.getLastName());
         Assertions.assertEquals(foundUser.getFirstName(), user.getFirstName());
     }
+
+    @Test
+    @DisplayName(value = "Test if a user is deleted successful")
+    public void deleteUser(){
+        String id = "random-uuid";
+        Mockito.doNothing().when(userRepository).deleteById(id);
+        userService.deleteUser(id);
+        Mockito.verify(userRepository, Mockito.times(1)).deleteById(id);
+    }
 }
